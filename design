@@ -1,0 +1,16 @@
+game 1:
+
+Player 1 hits a button and player 2 has to hit the same button as quickly as possible.
+Player 1 can fake player 2 by reaching for one button and quickly changing to another, when player 1 hits a button it will light up and the corresponding button on player 2's board will be the epicentre of a ripple in the video feed to let player 2 know which button player 1 actually hit, at which point player 1's button will turnoff.
+	the game can continue in a number of ways:
+		1: player 2 to then hits a button and player 1 has to react.
+		2: player 1 hits a new button and keeps serving until player 2 hits the 			wrong button or takes too long to respond.
+
+If this game had more than 2 players then fork 1 could have the first player to react to player 1s button press gets to hit the next button. The winner is decided by the player who caught the most button presses. If a player hits the wrong button or tries to serve when they havent won the right to then they will be deducted points.
+
+
+
+game 2:
+
+
+
