@@ -92,13 +92,6 @@ if len(sys.argv) != 1:
 				send_message(new)
 				break
 
-	
 		while not yourTurn:
 			if received:
 				for player in players:
-				
-	
-		
-
-
-
