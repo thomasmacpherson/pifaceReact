@@ -18,9 +18,21 @@ players_times = list()
 
 opponents_numbers = list()
 
-def send_message(code, text):
-	pass
 
+
+def send_message(code, text):
+	global REMOTE_UDP_IP
+	global REMOTE_UDP_PORT
+	global sock
+	MESSAGE= str(code) += text
+
+	#print "UDP target IP:", REMOTE_UDP_IP
+	#print "UDP target port:", REMOTE_UDP_PORT
+	print "message sent:", MESSAGE
+
+	sock = socket.socket(socket.AF_INET,
+			     socket.SOCK_DGRAM)
+	sock.sendto(MESSAGE, (REMOTE_UDP_IP, REMOTE_UDP_PORT))
 
 
 
@@ -45,17 +57,25 @@ def network_listener():
 		if code == 0:	# players numbers
 			opponents_numbers.append(int(message))
 
-		elif code == 1:	
+		elif code == 1:		# players reaction times
+			players_times.append(int(message))
 
-		elif code == 2:
-			pass
+		elif code == 2:		#players scores
+			players_scores[players_ips.index(addr)]= int(message)
+
+
 		elif code == 3:
 			pass
 		elif code == 4:
 			pass
 
 
-# record number of players and their IP address
+
+
+
+
+
+# record number of players and their IP addresses
 if len(sys.argv) > 3:
 	number_of_players = int(sys.argv[1])
 	player_number = int(sys.argv[2])
@@ -72,7 +92,7 @@ if len(sys.argv) > 3:
 			if i > 2 :
 				players_ips.append(sys.argv[i])
 				players_scores.append(0)
-				players_times.append(-1)
+
 
 	if number_of_players-1 != len(players_ips):
 		print "The number of player IPs you have given doesn't match the number of players specified"
@@ -137,9 +157,9 @@ while(in_game):
 	while(commander):
 		if pressed_button != previous_pressed_button and pressed_button != 0:
 			send_message(1,pressed_button)
-			while(len(responses)!=number_of_players-1):
+			while(len(players_times)!=number_of_players-1):
 				pass
-			if sum(responses) != (number_of_players-1)*-1: # if no players got the answer wrong
+			if sum(players_times) != (number_of_players-1)*-1: # if no players got the answer wrong
 				break		# break commander while loop
 		previous_pressed_button = pressed_button
 	
