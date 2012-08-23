@@ -241,6 +241,7 @@ while(in_game):
 #				if button press == button received
 #					current time - recorded time
 #					send time to other players
+			previous_pressed_button = pressed_button
 
 			if pressed_button == int(received_button):
 				received_button = 0
