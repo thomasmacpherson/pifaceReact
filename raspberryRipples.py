@@ -205,7 +205,7 @@ while(in_game):
 #  if button pressed send number to other players
 #    go into network waiting mode
 	while(commander):
-		print "commander"
+		#print "commander"
 
 		if pressed_button != previous_pressed_button and pressed_button != 0:
 			send_message(4,pressed_button)
@@ -234,7 +234,7 @@ while(in_game):
 
 	while(not commander):
 		previous_pressed_button = pressed_button
-		print "not commander"
+		#print "not commander"
 		for player in players_times:
 			player = -2
 
