@@ -3,6 +3,7 @@ import sys
 import threading
 import time
 import piface.pfio as pfio
+
 pfio.init()
 
 number_of_players = 0
@@ -24,7 +25,7 @@ def send_message(code, text):
 	global REMOTE_UDP_IP
 	global REMOTE_UDP_PORT
 	global sock
-	MESSAGE= str(code) += text
+	MESSAGE= str(code) + text
 
 	#print "UDP target IP:", REMOTE_UDP_IP
 	#print "UDP target port:", REMOTE_UDP_PORT
@@ -37,14 +38,14 @@ def send_message(code, text):
 
 
 
-def arcade_buttons:
+def arcade_buttons():
 	while(True):
 		pfio.write_output(pfio.read_input())
 
 
 def piface_listener():
 	while(True):
-		pressed_button = pfio.read_input())
+		pressed_button = pfio.read_input()
 
 
 def network_listener():
@@ -214,7 +215,7 @@ while(in_game):
 							continue
 						elif player < reaction_time:
 							commander = False
-
+					score += 3
 					break
 
 
