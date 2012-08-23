@@ -92,7 +92,7 @@ def deal_with_packet(packet,sender):
 			players_times.append(int(message))
 
 		elif code == 2:		#players scores
-			players_scores[players_ips.index(addr)]= int(message)
+			players_scores[players_ips.index(sender[0])]= int(message)
 
 		elif code == 3:
 			print "player number added"
@@ -231,11 +231,11 @@ while(in_game):
 
 #		while no piface input:
 #			if button press:
-			count = 100000
-			while(count):
+			#count = 100000
+			while(True):
 				if pressed_button != previous_pressed_button and pressed_button != 0:
-					break
-				count -= 1
+				break
+				#count -= 1
 #				if button press == button received
 #					current time - recorded time
 #					send time to other players
