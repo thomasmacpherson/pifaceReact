@@ -4,7 +4,7 @@ import threading
 import time
 import piface.pfio as pfio
 
-pfio.init()
+
 
 number_of_players = 0
 player_number = 0
@@ -102,7 +102,9 @@ def deal_with_packet(packet,sender):
 
 
 
-
+network_listener_thread = threading.Thread(target=network_listener)
+network_listener_thread.daemon = True
+network_listener_thread.start()
 
 
 
@@ -138,13 +140,13 @@ else:
 # start network listening thread
 # start arcade buttons thread (for lighting up buttons when they are pressed)
 
+
+
 piface_listener_thread = threading.Thread(target=piface_listener)
 piface_listener_thread.daemon = True
 piface_listener_thread.start()
 
-network_listener_thread = threading.Thread(target=network_listener)
-network_listener_thread.daemon = True
-network_listener_thread.start()
+
 
 arcade_buttons_thread = threading.Thread(target=arcade_buttons)
 arcade_buttons_thread.daemon = True
