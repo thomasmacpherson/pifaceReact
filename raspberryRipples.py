@@ -1,4 +1,4 @@
-import socket
+import piface.pfion as pfion
 import sys
 import threading
 import time
@@ -20,8 +20,7 @@ players_times = list()
 opponents_numbers = list()
 opponents_number_of_players = list()
 
-REMOTE_UDP_PORT = 54321
-YOUR_IP =socket.gethostbyname(socket.gethostname())
+
 
 
 def end_game(reason):
@@ -37,18 +36,18 @@ def end_game(reason):
 
 def send_message(code, text):
 	global players_ips
-	global REMOTE_UDP_PORT
 	global sock
 	MESSAGE= str(code) + "*" + str(text)
 
 	#print "UDP target IP:", REMOTE_UDP_IP
 	#print "UDP target port:", REMOTE_UDP_PORT
 	print "message sent:", MESSAGE
+	p = pfion.PfionPacket()
 
-	sock = socket.socket(socket.AF_INET,
-			     socket.SOCK_DGRAM)
+
 	for player_ip in players_ips:
-		sock.sendto(MESSAGE, (player_ip, REMOTE_UDP_PORT))
+		p.data = MESSAGE
+		pfion.send_packet(p,player_ip)
 
 
 
@@ -71,12 +70,16 @@ def network_listener():
 	global opponents_number_of_players
 	global players_ips
 	
-	sock2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	sock2.bind((YOUR_IP,54321))
 
+
+	pfion.start_pfio_server(callback=deal_with_packet)
+"""
 	while(True):
 		data, addr = sock2.recvfrom(1024)
-		tu = data.partition("*")
+"""
+
+def deal_with_packet(packet):
+		tu = packet.data.partition("*")
 		print "%s from %s" %data %addr
 		code = tu[0]
 		message = tu[2]
