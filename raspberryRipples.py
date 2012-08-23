@@ -210,6 +210,8 @@ while(in_game):
 			if sum(players_times) != (number_of_players-1)*-1: # if no players got the answer wrong
 
 				break		# break commander while loop
+			else:
+				commander = False
 		previous_pressed_button = pressed_button
 	
 #TODO : if neither get right button become the commander again
