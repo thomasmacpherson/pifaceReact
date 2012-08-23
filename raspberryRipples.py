@@ -4,7 +4,7 @@ import threading
 import time
 import piface.pfio as pfio
 
-
+pfio.init()
 
 number_of_players = 0
 player_number = 0
@@ -193,7 +193,7 @@ commander = False	# player 1 is sent to a piface input waiting mode
 if player_number == 1:
 	commander = True
 
-
+previous_pressed_button = 0
 while(in_game):
 
 # while loop handles piface input from shared variables
