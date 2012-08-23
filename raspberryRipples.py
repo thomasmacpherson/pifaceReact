@@ -19,13 +19,14 @@ players_times = list()
 
 opponents_numbers = list()
 
-
+REMOTE_UDP_PORT = 54321
+YOUR_IP =socket.gethostbyname(socket.gethostname())
 
 def send_message(code, text):
-	global REMOTE_UDP_IP
+	global players_ips
 	global REMOTE_UDP_PORT
 	global sock
-	MESSAGE= str(code) + text
+	MESSAGE= str(code) + str(text)
 
 	#print "UDP target IP:", REMOTE_UDP_IP
 	#print "UDP target port:", REMOTE_UDP_PORT
@@ -33,7 +34,8 @@ def send_message(code, text):
 
 	sock = socket.socket(socket.AF_INET,
 			     socket.SOCK_DGRAM)
-	sock.sendto(MESSAGE, (REMOTE_UDP_IP, REMOTE_UDP_PORT))
+	for player_ip in players_ips:
+		sock.sendto(MESSAGE, (player_ip, REMOTE_UDP_PORT))
 
 
 
@@ -49,6 +51,10 @@ def piface_listener():
 
 
 def network_listener():
+	
+	sock2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	sock2.bind((YOUR_IP,54321))
+
 	while(True):
 		data, addr = sock2.recvfrom(1024)
 		tu = data.partition("*")
