@@ -187,7 +187,7 @@ while(len(opponents_numbers)<number_of_players-1):
 
 # 	if 2 machines specify the same player number then exit and tell everyone else to exit.
 for opponent_number in opponents_numbers:
-	if player_number == opponent_number:
+	if player_number == opponent_number: n
 		end_game(2) # end the game with the reason (opponent disagreement)
 
 
@@ -302,10 +302,18 @@ while(in_game):
 #					continue (stay in network waiting mode, but break this interation)
 				print "finished "
 			else:
+				print received_button
 				received_button = 0
-				print "pressed not equal to received"
+				print "pressed not equal to received "
+				print pressed_button
+
 				send_message(1, -1) # code 2 reaction time, -1 for incorrect answer
 				score -= 1
 				send_message(2, score)
 			previous_pressed_button = pressed_button
-
+		else:
+			if pressed_button != previous_pressed_button and pressed_button != 0:
+				score -= 1
+				print "not your turn to press"
+				send_message(2, score)
+			previous_pressed_button = pressed_button
