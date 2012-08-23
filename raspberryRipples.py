@@ -205,20 +205,25 @@ while(in_game):
 #  if button pressed send number to other players
 #    go into network waiting mode
 	while(commander):
+		print "commander"
+
 		if pressed_button != previous_pressed_button and pressed_button != 0:
 			send_message(4,pressed_button)
 			while(len(players_times)!=number_of_players-1):
 				pass
-			if sum(players_times) != (number_of_players-1)*-1: # if no players got the answer wrong
-
-				break		# break commander while loop
+			print "result received"
+			if sum(players_times) == (number_of_players-1)*-1: # if no players got the answer wrong
+				print "still commander"		# continue commander while loop
 			else:
 				commander = False
+			print sum(players_times)
+			print (number_of_players-1)*-1
+			del players_times[:]
 		previous_pressed_button = pressed_button
 	
 #TODO : if neither get right button become the commander again
 
-
+	previous_pressed_button = pressed_button
 
 
 # while network waiting mode:
@@ -228,6 +233,8 @@ while(in_game):
 
 
 	while(not commander):
+		previous_pressed_button = pressed_button
+		print "not commander"
 		for player in players_times:
 			player = -2
 
@@ -245,6 +252,8 @@ while(in_game):
 #				if button press == button received
 #					current time - recorded time
 #					send time to other players
+			print "new button press"
+
 			previous_pressed_button = pressed_button
 
 			if pressed_button == int(received_button): # correct answer
@@ -268,7 +277,8 @@ while(in_game):
 							wl = False
 					if wl == True:
 						break
-				
+					print "4"
+
 				for player in players_times:
 					if player == -2:
 						continue
