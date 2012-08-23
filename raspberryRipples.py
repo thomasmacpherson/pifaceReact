@@ -21,7 +21,7 @@ opponents_numbers = list()
 opponents_number_of_players = list()
 
 pressed_button = 0
-
+received_button = 0
 
 def end_game(reason):
 	if reason == 0:
@@ -98,7 +98,8 @@ def deal_with_packet(packet,sender):
 			print "player number added"
 			opponents_number_of_players.append(int(message))
 		elif code == 4:
-			pass
+			global received_button
+			received_button = int(message)
 
 
 
@@ -201,10 +202,11 @@ while(in_game):
 #    go into network waiting mode
 	while(commander):
 		if pressed_button != previous_pressed_button and pressed_button != 0:
-			send_message(1,pressed_button)
+			send_message(4,pressed_button)
 			while(len(players_times)!=number_of_players-1):
 				pass
 			if sum(players_times) != (number_of_players-1)*-1: # if no players got the answer wrong
+
 				break		# break commander while loop
 		previous_pressed_button = pressed_button
 	
