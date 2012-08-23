@@ -18,15 +18,28 @@ players_scores = list()
 players_times = list()
 
 opponents_numbers = list()
+opponents_number_of_players = list()
 
 REMOTE_UDP_PORT = 54321
 YOUR_IP =socket.gethostbyname(socket.gethostname())
+
+
+def end_game(reason):
+	if reason == 0:
+		pass
+	elif reason ==1:
+		print "Game ended due to invalid command line arguments"
+	elif reason == 2:
+		print "Game ended due to disagreement between players"
+	elif reason == 3:
+		pass
+	exit()
 
 def send_message(code, text):
 	global players_ips
 	global REMOTE_UDP_PORT
 	global sock
-	MESSAGE= str(code) + str(text)
+	MESSAGE= str(code) + "*" + str(text)
 
 	#print "UDP target IP:", REMOTE_UDP_IP
 	#print "UDP target port:", REMOTE_UDP_PORT
@@ -72,7 +85,7 @@ def network_listener():
 
 
 		elif code == 3:
-			pass
+			opponents_number_of_players.append(int(message))
 		elif code == 4:
 			pass
 
@@ -126,6 +139,15 @@ arcade_buttons_thread = threading.Thread(target=arcade_buttons)
 arcade_buttons_thread.daemon = True
 arcade_buttons_thread.start()
 
+time.sleep(6)
+
+send_message(3,number_of_players)
+
+while(len(opponents_number_of_players) < number_of_players-1):
+	pass
+for opponents_number_belief in opponents_number_of_players:
+	if opponents_number_belief != number_of_players:
+		end_game(2)
 
 
 
