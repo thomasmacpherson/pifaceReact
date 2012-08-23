@@ -187,7 +187,7 @@ while(len(opponents_numbers)<number_of_players-1):
 
 # 	if 2 machines specify the same player number then exit and tell everyone else to exit.
 for opponent_number in opponents_numbers:
-	if player_number == opponent_number: n
+	if player_number == opponent_number:
 		end_game(2) # end the game with the reason (opponent disagreement)
 
 
