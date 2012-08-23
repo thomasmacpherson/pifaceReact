@@ -89,7 +89,7 @@ def deal_with_packet(packet,sender):
 			opponents_numbers.append(int(message))
 
 		elif code == 1:		# players reaction times
-			players_times.append(int(message))
+			players_times.append(float(message))
 
 		elif code == 2:		#players scores
 			players_scores[players_ips.index(sender[0])]= int(message)
