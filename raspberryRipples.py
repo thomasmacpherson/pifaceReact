@@ -278,4 +278,5 @@ while(in_game):
 				send_message(1, -1) # code 2 reaction time, -1 for incorrect answer
 				score -= 1
 				send_message(2, score)
+			previous_pressed_button = pressed_button
 
