@@ -78,11 +78,12 @@ def network_listener():
 		data, addr = sock2.recvfrom(1024)
 """
 
-def deal_with_packet(packet):
+def deal_with_packet(packet,sender):
 		tu = packet.data.partition("*")
-		print "%s from %s" %data %addr
+
 		code = tu[0]
 		message = tu[2]
+		print "%s from %s" %(tu, sender)
 
 		if code == 0:	# players numbers
 			opponents_numbers.append(int(message))
