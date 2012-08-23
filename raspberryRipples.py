@@ -92,6 +92,8 @@ def deal_with_packet(packet,sender):
 			players_times.append(float(message))
 
 		elif code == 2:		#players scores
+			print players_ips
+			print sender[0]
 			players_scores[players_ips.index(sender[0])]= int(message)
 			print "your score %d" %score
 			print "Opponents' scores %s" %players_scores
@@ -245,12 +247,12 @@ while(in_game):
 #					send time to other players
 			previous_pressed_button = pressed_button
 
-			if pressed_button == int(received_button):
+			if pressed_button == int(received_button): # correct answer
 				received_button = 0
 				current_time = time.time()
 				reaction_time = current_time - received_time
 				send_message(1,reaction_time) # code 2 is reaction time
-
+				print "pressed quals received"
 
 #				while time not received from other players:
 #					if received:
@@ -259,25 +261,39 @@ while(in_game):
 #						else: 
 #							continue (stay in network waiting mode, but break this interation)
 				commander = True
-				while(True):
-
+				while(len(players_times) > 0):
+					wl = True
 					for player in players_times:
 						if player == -2:
-							continue
-						elif player < reaction_time:
-							commander = False
+							wl = False
+					if wl == True:
+						break
+				
+				for player in players_times:
+					if player == -2:
+						continue
+					elif player == -1:
+						continue
+					elif player < reaction_time:
+						commander = False
+
+				if(commander):
 					score += 3
-					send_message(2, score)
-					break
+				else:
+					score -= 1
+
+				send_message(2, score)
+					
 
 
 #				else:
 #					score -1  send score
 #					time = -1 send time to other players
 #					continue (stay in network waiting mode, but break this interation)
-
+				print "finished "
 			else:
 				received_button = 0
+				print "pressed not equal to received"
 				send_message(1, -1) # code 2 reaction time, -1 for incorrect answer
 				score -= 1
 				send_message(2, score)
