@@ -59,11 +59,17 @@ def arcade_buttons():
 
 
 def piface_listener():
+	global pressed_button
 	while(True):
 		pressed_button = pfio.read_input()
 
 
 def network_listener():
+	global opponents_numbers
+	global players_times
+	global players_scores
+	global opponents_number_of_players
+	global players_ips
 	
 	sock2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	sock2.bind((YOUR_IP,54321))
@@ -71,6 +77,7 @@ def network_listener():
 	while(True):
 		data, addr = sock2.recvfrom(1024)
 		tu = data.partition("*")
+		print "%s from %s" %data %addr
 		code = tu[0]
 		message = tu[2]
 
