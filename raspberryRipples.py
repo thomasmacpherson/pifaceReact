@@ -93,6 +93,8 @@ def deal_with_packet(packet,sender):
 
 		elif code == 2:		#players scores
 			players_scores[players_ips.index(sender[0])]= int(message)
+			print "your score %d" %score
+			print "Opponents' scores %s" %players_scores
 
 		elif code == 3:
 			print "player number added"
@@ -244,7 +246,7 @@ while(in_game):
 				received_button = 0
 				current_time = time.time()
 				reaction_time = current_time - received_time
-				send_message(2,reaction_time) # code 2 is reaction time
+				send_message(1,reaction_time) # code 2 is reaction time
 
 
 #				while time not received from other players:
@@ -262,6 +264,7 @@ while(in_game):
 						elif player < reaction_time:
 							commander = False
 					score += 3
+					send_message(2, score)
 					break
 
 
@@ -272,6 +275,7 @@ while(in_game):
 
 			else:
 				received_button = 0
+				send_message(1, -1) # code 2 reaction time, -1 for incorrect answer
 				score -= 1
-				send_message(2, -1) # code 2 reaction time, -1 for incorrect answer
+				send_message(2, score)
 
