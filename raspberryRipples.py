@@ -20,7 +20,7 @@ players_times = list()
 opponents_numbers = list()
 opponents_number_of_players = list()
 
-
+pressed_button = 0
 
 
 def end_game(reason):
