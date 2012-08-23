@@ -81,7 +81,7 @@ def network_listener():
 def deal_with_packet(packet,sender):
 		tu = packet.data.partition("*")
 
-		code = tu[0]
+		code = int(tu[0])
 		message = tu[2]
 		print "%s from %s" %(tu, sender)
 
@@ -94,8 +94,8 @@ def deal_with_packet(packet,sender):
 		elif code == 2:		#players scores
 			players_scores[players_ips.index(addr)]= int(message)
 
-
 		elif code == 3:
+			print "player number added"
 			opponents_number_of_players.append(int(message))
 		elif code == 4:
 			pass
@@ -155,14 +155,17 @@ arcade_buttons_thread.start()
 time.sleep(6)
 
 send_message(3,number_of_players)
+print "0"
 
 while(len(opponents_number_of_players) < number_of_players-1):
-	pass
+	print opponents_number_of_players
+	time.sleep(4)
+print "1"
 for opponents_number_belief in opponents_number_of_players:
 	if opponents_number_belief != number_of_players:
 		end_game(2)
 
-
+print "2"
 
 #	specify what player number you are, tell the other machines
 
