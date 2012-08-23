@@ -234,7 +234,7 @@ while(in_game):
 			#count = 100000
 			while(True):
 				if pressed_button != previous_pressed_button and pressed_button != 0:
-				break
+					break
 				#count -= 1
 #				if button press == button received
 #					current time - recorded time
