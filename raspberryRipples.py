@@ -208,9 +208,14 @@ while(in_game):
 		#print "commander"
 
 		if pressed_button != previous_pressed_button and pressed_button != 0:
+			previous_pressed_button = pressed_button
 			send_message(4,pressed_button)
 			while(len(players_times)!=number_of_players-1):
-				pass
+				if pressed_button != 0 and pressed_button != previous_pressed_button:
+					print "only one serve please"
+					score -= 1
+					send_message(2, score)
+				previous_pressed_button = pressed_button
 			print "result received"
 			if sum(players_times) == (number_of_players-1)*-1: # if no players got the answer wrong
 				print "still commander"		# continue commander while loop
