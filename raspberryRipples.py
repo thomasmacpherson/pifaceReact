@@ -3,6 +3,20 @@ import sys
 import threading
 import time
 import piface.pfio as pfio
+import pygame
+
+from pygame.locals import *
+
+pygame.init()
+font = pygame.font.Font(None, 60)
+big_font = pygame.font.Font(None, 400)
+
+screen=pygame.display.set_mode((1100,900), FULLSCREEN)
+
+background = pygame.image.load("rpibatakbg.png").convert()
+
+scr_pos_x = 0
+scr_pos_y = 0
 
 pfio.init()
 
@@ -55,12 +69,14 @@ def send_message(code, text):
 def arcade_buttons():
 	while(True):
 		pfio.write_output(pfio.read_input())
+		check_keys()
 
 
 def piface_listener():
 	global pressed_button
 	while(True):
 		pressed_button = pfio.read_input()
+		check_keys()
 
 
 def network_listener():
@@ -69,10 +85,40 @@ def network_listener():
 	global players_scores
 	global opponents_number_of_players
 	global players_ips
-	
-
-
 	pfion.start_pfio_server(callback=deal_with_packet)
+
+def mouse_positioning():
+	pos = pygame.mouse.get_pos()
+	while(True):
+		if pygame.mouse.get_pressed()[0]:
+			if pygame.mouse.get_pos() != pos:
+				print	pygame.mouse.get_pos()
+				pos = pygame.mouse.get_pos()
+
+
+	
+def draw_screen():
+	screen.blit(background, (scr_pos_x - 200 ,scr_pos_y - 100))
+
+	display_score = font.render(str(score), 1, (0,0,0))
+	screen.blit(display_score, (880 + scr_pos_x, 358 + scr_pos_y))
+
+	for ind, player in enumerate(players_scores):
+		screen.blit(font.render("Player " + str(ind+1)+ " has a score of " + str(player), 1, (0,0,0)), (880 + scr_pos_x + (ind * 50), 358 + scr_pos_y))		
+	pygame.display.update()
+	check_keys()
+
+
+def check_keys():
+	for event in pygame.event.get():
+		if event.type == QUIT:
+			pygame.quit()
+			sys.exit()
+		if event.type == KEYDOWN:
+			if event.key == K_ESCAPE:
+				pygame.quit()
+				sys.exit()		
+	#time.sleep(1)
 """
 	while(True):
 		data, addr = sock2.recvfrom(1024)
@@ -104,14 +150,88 @@ def deal_with_packet(packet,sender):
 		elif code == 4:
 			global received_button
 			received_button = int(message)
+			button_ripple(received_button)
 
+def button_ripple(b_number):
+	x_pos = 0
+	y_pos = 0
+
+
+	if b_number == 1:
+		x_pos = 267
+		y_pos = 434
+
+	elif b_number == 2:
+		x_pos = 467
+		y_pos = 610
+
+	elif b_number == 4:
+		x_pos = 536
+		y_pos = 435
+
+		
+	elif b_number == 8:
+		x_pos = 465
+		y_pos = 261
+
+		
+	elif b_number == 16:
+		x_pos = 588
+		y_pos = 780
+
+		
+	elif b_number == 32:
+		x_pos = 735
+		y_pos = 432
+
+		
+	elif b_number == 64:
+		x_pos = 584
+		y_pos = 100
+
+		
+	elif b_number == 128:
+		x_pos = 812
+		y_pos = 778
+
+		
+	elif b_number == 256:
+		x_pos = 878
+		y_pos = 637
+
+		
+	elif b_number == 512:
+		x_pos = 864
+		y_pos = 233
+
+		
+	elif b_number == 1024:
+		x_pos = 796
+		y_pos = 100
+
+		
+	elif b_number == 2048:
+		x_pos = 1095
+		y_pos = 565
+
+		
+	elif b_number == 4096:
+		x_pos = 1095
+		y_pos = 311
+
+		
+
+
+	pygame.draw.circle(screen, (100,0,20),(x_pos + scr_x_pos, y_pos + scr_y_pos), 50, 4) 
 
 
 network_listener_thread = threading.Thread(target=network_listener)
 network_listener_thread.daemon = True
 network_listener_thread.start()
 
-
+mouse_thread = threading.Thread(target=mouse_positioning)
+mouse_thread.daemon = True
+mouse_thread.start()
 
 # record number of players and their IP addresses
 if len(sys.argv) > 3:
@@ -156,6 +276,11 @@ piface_listener_thread.start()
 arcade_buttons_thread = threading.Thread(target=arcade_buttons)
 arcade_buttons_thread.daemon = True
 arcade_buttons_thread.start()
+
+draw_screen_thread = threading.Thread(target=draw_screen)
+draw_screen_thread.daemon = True
+draw_screen_thread.start()
+
 
 time.sleep(6)
 
