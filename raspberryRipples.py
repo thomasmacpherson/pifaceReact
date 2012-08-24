@@ -3,20 +3,20 @@ import sys
 import threading
 import time
 import piface.pfio as pfio
-import pygame
+#import pygame
 
-from pygame.locals import *
+#from pygame.locals import *
 
-pygame.init()
-font = pygame.font.Font(None, 60)
-big_font = pygame.font.Font(None, 400)
+#pygame.init()
+#font = pygame.font.Font(None, 60)
+#big_font = pygame.font.Font(None, 400)
 
-screen=pygame.display.set_mode((1100,900), FULLSCREEN)
+#screen=pygame.display.set_mode((900,700), FULLSCREEN)
 
-background = pygame.image.load("rpibatakbg.png").convert()
+#background = pygame.image.load("rpibatakbg.png").convert()
 
-scr_pos_x = -50
-scr_pos_y = 0
+scr_pos_x = 50
+scr_pos_y = 200
 
 pfio.init()
 
@@ -69,7 +69,7 @@ def send_message(code, text):
 def arcade_buttons():
 	while(True):
 		pfio.write_output(pfio.read_input())
-		check_keys()
+		#check_keys()
 
 
 
@@ -279,9 +279,9 @@ arcade_buttons_thread = threading.Thread(target=arcade_buttons)
 arcade_buttons_thread.daemon = True
 arcade_buttons_thread.start()
 
-draw_screen_thread = threading.Thread(target=draw_screen)
-draw_screen_thread.daemon = True
-draw_screen_thread.start()
+#draw_screen_thread = threading.Thread(target=draw_screen)
+#draw_screen_thread.daemon = True
+#draw_screen_thread.start()
 
 
 time.sleep(6)
