@@ -11,7 +11,7 @@ pygame.init()
 font = pygame.font.Font(None, 60)
 big_font = pygame.font.Font(None, 400)
 
-screen=pygame.display.set_mode((1100,900))
+screen=pygame.display.set_mode((1100,900), FULLSCREEN)
 
 background = pygame.image.load("rpibatakbg.png").convert()
 
@@ -69,6 +69,7 @@ def send_message(code, text):
 def arcade_buttons():
 	while(True):
 		pfio.write_output(pfio.read_input())
+		check_keys()
 
 
 
@@ -76,6 +77,7 @@ def piface_listener():
 	global pressed_button
 	while(True):
 		pressed_button = pfio.read_input()
+
 
 
 
@@ -106,7 +108,6 @@ def draw_screen():
 	for ind, player in enumerate(players_scores):
 		screen.blit(font.render("Player " + str(ind+1)+ " has a score of " + str(player), 1, (0,0,0)), (880 + scr_pos_x + (ind * 50), 358 + scr_pos_y))		
 	pygame.display.update()
-	check_keys()
 
 
 def check_keys():
@@ -220,10 +221,11 @@ def button_ripple(b_number):
 		y_pos = 311
 
 		
-
-
-	pygame.draw.circle(screen, (100,0,20),(x_pos + scr_x_pos, y_pos + scr_y_pos), 50, 4) 
-
+	for i in range(1,10):
+		for j in range(1,5):
+			pygame.draw.circle(screen, (100,0,20),(x_pos + scr_x_pos, y_pos + scr_y_pos), i*j*10, 4) 
+			draw_screen()
+			time.sleep(.5)
 
 network_listener_thread = threading.Thread(target=network_listener)
 network_listener_thread.daemon = True
