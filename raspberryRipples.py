@@ -15,7 +15,7 @@ screen=pygame.display.set_mode((1100,900), FULLSCREEN)
 
 background = pygame.image.load("rpibatakbg.png").convert()
 
-scr_pos_x = 0
+scr_pos_x = -50
 scr_pos_y = 0
 
 pfio.init()
@@ -229,9 +229,9 @@ network_listener_thread = threading.Thread(target=network_listener)
 network_listener_thread.daemon = True
 network_listener_thread.start()
 
-mouse_thread = threading.Thread(target=mouse_positioning)
-mouse_thread.daemon = True
-mouse_thread.start()
+#mouse_thread = threading.Thread(target=mouse_positioning)
+#mouse_thread.daemon = True
+#mouse_thread.start()
 
 # record number of players and their IP addresses
 if len(sys.argv) > 3:
