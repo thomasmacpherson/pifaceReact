@@ -11,7 +11,7 @@ pygame.init()
 font = pygame.font.Font(None, 60)
 big_font = pygame.font.Font(None, 400)
 
-screen=pygame.display.set_mode((1100,900), FULLSCREEN)
+screen=pygame.display.set_mode((1100,900))
 
 background = pygame.image.load("rpibatakbg.png").convert()
 
@@ -69,14 +69,14 @@ def send_message(code, text):
 def arcade_buttons():
 	while(True):
 		pfio.write_output(pfio.read_input())
-		check_keys()
+
 
 
 def piface_listener():
 	global pressed_button
 	while(True):
 		pressed_button = pfio.read_input()
-		check_keys()
+
 
 
 def network_listener():
@@ -111,9 +111,9 @@ def draw_screen():
 
 def check_keys():
 	for event in pygame.event.get():
-		if event.type == QUIT:
-			pygame.quit()
-			sys.exit()
+		#if event.type == QUIT:
+		#	pygame.quit()
+		#	sys.exit()
 		if event.type == KEYDOWN:
 			if event.key == K_ESCAPE:
 				pygame.quit()
